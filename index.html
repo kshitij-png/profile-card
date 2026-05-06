@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kshitij — Profile</title>
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0f0f1a;
+      --card-bg: #1a1a2e;
+      --card-border: #2d2d4e;
+      --text-primary: #e8e8f0;
+      --text-secondary: #9999bb;
+      --accent: #7c6aff;
+      --accent-glow: rgba(124, 106, 255, 0.35);
+      --tag-bg: #2a2a45;
+      --tag-border: #3d3d6b;
+      --tag-hover-bg: #7c6aff;
+      --tag-hover-text: #fff;
+      --toggle-bg: #2a2a45;
+      --toggle-icon: "☀️";
+      --link-color: #7c6aff;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f0f0f8;
+      --card-bg: #ffffff;
+      --card-border: #d8d8ee;
+      --text-primary: #1a1a2e;
+      --text-secondary: #5a5a7a;
+      --accent: #5b47e0;
+      --accent-glow: rgba(91, 71, 224, 0.2);
+      --tag-bg: #ebebf8;
+      --tag-border: #c5c5e8;
+      --tag-hover-bg: #5b47e0;
+      --tag-hover-text: #fff;
+      --toggle-bg: #e0e0f0;
+      --toggle-icon: "🌙";
+      --link-color: #5b47e0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      transition: background-color 0.3s ease;
+      padding: 1.5rem;
+    }
+
+    /* Subtle animated background orbs */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      width: 380px;
+      height: 380px;
+      background: var(--accent);
+      top: -100px;
+      left: -100px;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    body::after {
+      width: 300px;
+      height: 300px;
+      background: #ff6aad;
+      bottom: -80px;
+      right: -80px;
+      animation: drift 10s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(40px, 30px); }
+    }
+
+    /* Toggle button */
+    .theme-toggle {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--toggle-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 50px;
+      padding: 0.45rem 0.9rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s, border-color 0.3s, transform 0.15s;
+      user-select: none;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.08);
+    }
+
+    /* Card */
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 3rem 2.5rem 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--card-border);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Avatar placeholder */
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #ff6aad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 0 4px var(--card-bg), 0 0 0 6px var(--accent), 0 0 20px var(--accent-glow);
+      transition: box-shadow 0.3s;
+    }
+
+    /* Name */
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s;
+    }
+
+    .handle {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+    }
+
+    /* Divider */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #ff6aad);
+      border-radius: 2px;
+      margin: 0 auto 1.4rem;
+    }
+
+    /* Bio */
+    .bio {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      transition: color 0.3s;
+    }
+
+    /* Skill tags */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--text-secondary);
+      border-radius: 50px;
+      padding: 0.4rem 1.05rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: default;
+      transition: background 0.25s, border-color 0.25s, color 0.25s,
+                  transform 0.2s, box-shadow 0.25s;
+    }
+    .tag:hover {
+      background: var(--tag-hover-bg);
+      border-color: var(--tag-hover-bg);
+      color: var(--tag-hover-text);
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 6px 18px var(--accent-glow);
+    }
+
+    /* Contact link */
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--accent), #9b6aff);
+      border-radius: 50px;
+      padding: 0.7rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px var(--accent-glow);
+    }
+    .contact-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px var(--accent-glow);
+    }
+    .contact-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      .card {
+        padding: 2.2rem 1.5rem 2rem;
+        border-radius: 18px;
+      }
+      .theme-toggle {
+        top: 0.9rem;
+        right: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" id="toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+    ☀️
+  </button>
+
+  <div class="card">
+    <div class="avatar">✦</div>
+
+    <h1>Kshitij</h1>
+    <p class="handle">@kshitij</p>
+
+    <div class="divider"></div>
+
+    <p class="bio">
+      I'm a curious builder exploring the intersection of AI and web development.
+      I love crafting clean, minimal interfaces and learning something new every day.
+      Currently on a journey from zero to full-stack.
+    </p>
+
+    <div class="skills">
+      <span class="tag">HTML &amp; CSS</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">AI / Prompting</span>
+    </div>
+
+    <a class="contact-btn" href="mailto:social@lifeguru.app">
+      ✉ Contact Me
+    </a>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('toggle');
+    const root = document.documentElement;
+
+    toggle.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      toggle.textContent = isDark ? '🌙' : '☀️';
+    });
+  </script>
+
+</body>
+</html>
